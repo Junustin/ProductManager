@@ -2,12 +2,6 @@
 using Microsoft.Data.Sqlite;
 using ProductManager.Features.ProductComponents.Data;
 using ProductManager.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductManager.Sqlite
 {
@@ -31,7 +25,6 @@ namespace ProductManager.Sqlite
 				Price DECIMAL NOT NULL,
 				Stock INTEGER NOT NULL);";
 
-			// Dapper's execute
 			connection.Execute(sql);
 		}
 
@@ -49,6 +42,19 @@ namespace ProductManager.Sqlite
 			return new Product(newId, product.Name, product.Price, product.Stock);
 		}
 
+		public bool Update(Product product)
+		{
+			using var connection = new SqliteConnection(_connectionString);
+
+			string sql = @"
+				UPDATE Products
+				SET Name = @Name, Price = @Price, Stock = @Stock
+				WHERE Id = @Id;";
+
+			int rowsAffected = connection.Execute(sql, product);
+			return rowsAffected > 0;
+		}
+
 		public IEnumerable<Product> GetAll()
 		{
 			using var connection = new SqliteConnection(_connectionString);
@@ -56,6 +62,15 @@ namespace ProductManager.Sqlite
 			string sql = @"SELECT Id, Name, Price, Stock FROM Products";
 
 			return connection.Query<Product>(sql);
+		}
+
+		public Product? GetById(int id)
+		{
+			using var connection = new SqliteConnection(_connectionString);
+
+			string sql = @"SELECT Id, Name, Price, Stock FROM Products WHERE Id = @Id";
+
+			return connection.QuerySingleOrDefault<Product>(sql, new {Id = id});
 		}
 
 		public bool Remove(int id)

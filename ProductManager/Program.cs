@@ -3,7 +3,6 @@ using ProductManager.Interface;
 using ProductManager.Services;
 using ProductManager.Sqlite;
 
-
 namespace ProductManager
 {
     internal class Program
@@ -22,6 +21,7 @@ namespace ProductManager
 			dispatcher.RegisterCommand(new AddCommand(repo));
 			dispatcher.RegisterCommand(new ListCommand(repo));
 			dispatcher.RegisterCommand(new RemoveCommand(repo));
+			dispatcher.RegisterCommand(new UpdateCommand(repo));
 			dispatcher.RegisterCommand(new ClearCommand(repo));
 			dispatcher.RegisterCommand(new HelpCommand());
 			dispatcher.RegisterCommand(new ExitCommand(() => isRunning = false));

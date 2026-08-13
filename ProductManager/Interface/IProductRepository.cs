@@ -1,9 +1,4 @@
 ﻿using ProductManager.Features.ProductComponents.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductManager.Interface
 {
@@ -11,7 +6,9 @@ namespace ProductManager.Interface
 	{
 		void InitilizeDatabase();
 		Product Add(Product product);
+		bool Update(Product product);
 		IEnumerable<Product> GetAll();
+		Product? GetById(int id);
 		bool Remove(int idToRemove);
 		void ClearAll();
 	}

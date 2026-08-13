@@ -1,7 +1,6 @@
 ﻿using ProductManager.Features.ProductComponents.Data;
 using ProductManager.Interface;
 using ProductManager.Services;
-using ProductManager.Sqlite;
 
 namespace ProductManager.Command
 {
@@ -19,15 +18,10 @@ namespace ProductManager.Command
 
 		public void Execute(string[] args)
 		{
-			// Create new product from argument or pass to factory to create it
-			// Should validate the product data e.g. the same product name already exist in database if that is the case maybe return error 
-			// or ask user if they want to update the data of that product instead.
-			// Tell storage or database to add this new product to storage
-
 			// If invalid amount of arguments
 			if (args.Length != 3)
 			{
-				ConsoleLogger.LogError("Please enter correct arguments for Add command Example: Add <ProductName> <Price> <Stock>");
+				ConsoleLogger.LogWarning("Please enter correct arguments for Add command Example: Add <ProductName> <Price> <Stock>");
 				return;
 			}
 
@@ -42,12 +36,7 @@ namespace ProductManager.Command
 					return;
 				}
 			}
-			else
-			{
-				ConsoleLogger.LogError("Price must be positive number.");
-				return;
-			}
-
+			
 			if (!int.TryParse(args[2], out int stock))
 			{
 				ConsoleLogger.LogError("Stock must be non-negative whole number.");
