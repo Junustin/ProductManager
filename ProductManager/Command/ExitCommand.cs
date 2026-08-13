@@ -1,4 +1,5 @@
 ﻿using ProductManager.Interface;
+using ProductManager.Services;
 
 
 namespace ProductManager.Command
@@ -19,7 +20,7 @@ namespace ProductManager.Command
 		public void Execute(string[] args)
 		{
 			// Stop application exiting main loop
-			Console.WriteLine("Application exit");
+			ConsoleLogger.LogWarning("Application will exit.");
 			_stopApplication();
 		}
 	}

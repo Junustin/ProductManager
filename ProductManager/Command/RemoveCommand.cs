@@ -1,4 +1,5 @@
 ﻿using ProductManager.Interface;
+using ProductManager.Services;
 using ProductManager.Sqlite;
 
 namespace ProductManager.Command
@@ -20,7 +21,7 @@ namespace ProductManager.Command
 		{
 			if(args.Length != 1)
 			{
-				Console.WriteLine("Please enter correct arguments for Remove command Example: Remove <ProductID>");
+				ConsoleLogger.LogError("Please enter correct arguments for Remove command Example: Remove <ProductID>");
 				return;
 			}
 
@@ -28,18 +29,18 @@ namespace ProductManager.Command
 			{
 				if (_repo.Remove(idToRemove))
 				{
-					Console.WriteLine($"Remove product {idToRemove} successful.");
+					ConsoleLogger.LogSuccess($"Remove product {idToRemove} successful.");
 					return;
 				}
 				else
 				{
-					Console.WriteLine($"There is no product in Id:{idToRemove} to remove.");
+					ConsoleLogger.LogError($"There is no product in Id:{idToRemove} to remove.");
 					return;
 				}
 			}
 			else
 			{
-				Console.WriteLine("Please enter correct format for product Id");
+				ConsoleLogger.LogError("Please enter correct format for product Id");
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using ProductManager.Interface;
+using ProductManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace ProductManager.Command
 			}
 			else
 			{
-				Console.WriteLine($"'{commandName}' command does not exist, Type 'help' for options.");
+				ConsoleLogger.LogError($"'{commandName}' command does not exist, Type 'help' for options.");
 			}
 		}
 	}

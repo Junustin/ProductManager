@@ -1,4 +1,5 @@
 ﻿using ProductManager.Interface;
+using ProductManager.Services;
 
 namespace ProductManager.Command
 {
@@ -10,7 +11,7 @@ namespace ProductManager.Command
 
 		public void Execute(string[] args)
 		{
-			Console.WriteLine("Display all commands");
+			ConsoleLogger.LogInfo("Display all commands");
 		}
 	}
 }

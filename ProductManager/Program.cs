@@ -1,9 +1,8 @@
 ﻿using ProductManager.Command;
-using ProductManager.Features.ProductComponents.Data;
-using ProductManager.Features.Storage;
 using ProductManager.Interface;
+using ProductManager.Services;
 using ProductManager.Sqlite;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace ProductManager
 {
@@ -11,7 +10,7 @@ namespace ProductManager
     {
 		static void Main(string[] args)
         {
-			Console.WriteLine("Welcome to product manager");
+			ConsoleLogger.LogInfo("Welcome to product manager!");
 			bool isRunning = true;
 
 			// Initilize all components
@@ -30,14 +29,14 @@ namespace ProductManager
 			// Program loop
             while (isRunning)
             {
-				Console.WriteLine("Please enter command");
-                Console.Write("> ");
+				ConsoleLogger.LogInfo("Please enter command");
+                ConsoleLogger.LogInfo("> ", false);
 				string? rawInput = Console.ReadLine();
 
 				// handole blank or empty input
                 if(string.IsNullOrWhiteSpace(rawInput))
                 {
-					Console.WriteLine("Please enter valid command\nType help for all command");
+					ConsoleLogger.LogError("Please enter valid command\nType help for all command");
 					continue;
                 }
 

@@ -1,4 +1,5 @@
 ﻿using ProductManager.Interface;
+using ProductManager.Services;
 using ProductManager.Sqlite;
 
 
@@ -19,17 +20,17 @@ namespace ProductManager.Command
 
 		public void Execute(string[] args)
 		{
-			Console.Write("WARNING: This will DELETE ALL products and reset IDS. Are you sure Y/N: ");
+			ConsoleLogger.LogWarning("This will DELETE ALL products and reset IDS. Are you sure Y/N: ", false);
 			string? confirmation = Console.ReadLine();
 
 			if (confirmation?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true)
 			{
 				_repo.ClearAll();
-				Console.WriteLine("Database cleared successfully. Next added product will start at ID 1.");
+				ConsoleLogger.LogSuccess("Database cleared successfully. Next added product will start at ID 1.");
 			}
 			else
 			{
-				Console.WriteLine("Clear operation cancelled.");
+				ConsoleLogger.LogError("Clear operation cancelled.");
 			}
 		}
 	}

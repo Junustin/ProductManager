@@ -1,5 +1,6 @@
 ﻿using ProductManager.Features.ProductComponents.Data;
 using ProductManager.Interface;
+using ProductManager.Services;
 using ProductManager.Sqlite;
 
 namespace ProductManager.Command
@@ -26,7 +27,7 @@ namespace ProductManager.Command
 			// If invalid amount of arguments
 			if (args.Length != 3)
 			{
-				Console.WriteLine("Please enter correct arguments for Add command Example: Add <ProductName> <Price> <Stock>");
+				ConsoleLogger.LogError("Please enter correct arguments for Add command Example: Add <ProductName> <Price> <Stock>");
 				return;
 			}
 
@@ -37,19 +38,19 @@ namespace ProductManager.Command
 			{
 				if (price <= 0)
 				{
-					Console.WriteLine("Price must positive number.");
+					ConsoleLogger.LogError("Price must positive number.");
 					return;
 				}
 			}
 			else
 			{
-				Console.WriteLine("Price must be positive number.");
+				ConsoleLogger.LogError("Price must be positive number.");
 				return;
 			}
 
 			if (!int.TryParse(args[2], out int stock))
 			{
-				Console.WriteLine("Error: Stock must be non-negative whole number.");
+				ConsoleLogger.LogError("Stock must be non-negative whole number.");
 				return;
 			}
 
@@ -62,7 +63,7 @@ namespace ProductManager.Command
 
 			// Add product to list
 			Product createdProduct = _repo.Add(productToCreate); // Add new product ot list
-			Console.WriteLine($"Successfully added {productName} [ID: {createdProduct.Id}]");
+			ConsoleLogger.LogSuccess($"Successfully added {productName} ID: {createdProduct.Id}");
 		}
 	}
 }
