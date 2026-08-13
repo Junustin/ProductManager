@@ -8,15 +8,16 @@ namespace ProductManager.Features.ProductComponents.Data
 {
 	public class Product
 	{
-		private static int nextId = 0;
-		public int Id { get; }
+		public int Id { get; set; }
 		public string Name { get; set; } = string.Empty;
 		public decimal Price { get; set; } = decimal.Zero;
 		public int Stock { get; set; } = 0;
 
-		public Product(string name, decimal price, int stock)
+		public Product() { }
+
+		public Product(int id,string name, decimal price, int stock)
 		{
-			Id = ++nextId; // Increment before assignment
+			Id = id;
 			Name = name;
 			Price = price;
 			Stock = stock;

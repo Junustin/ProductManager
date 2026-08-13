@@ -1,5 +1,7 @@
-﻿using ProductManager.Features.Storage;
+﻿using ProductManager.Features.ProductComponents.Data;
+using ProductManager.Features.Storage;
 using ProductManager.Interface;
+using ProductManager.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,25 +16,24 @@ namespace ProductManager.Command
 
 		public string Description => "Display all product in database.";
 
-		private readonly ProductStorage _storage;
+		private readonly IProductRepository _repo;
 
 		// Inject product storage on construct command
-		public ListCommand(ProductStorage storage)
+		public ListCommand(IProductRepository repo)
 		{ 
-			_storage = storage;
+			_repo = repo;
 		}
 
 		public void Execute(string[] args)
 		{
-			if (_storage.GetAllProducts().Count == 0)
+			var products = _repo.GetAll();
+			if (!products.Any())
 			{
 				Console.WriteLine("No product in storage");
 				return;
 			}
 
 			Console.WriteLine("\nStorage list:");
-
-			var products = _storage.GetAllProducts();
 			foreach (var product in products)
 			{
 				Console.WriteLine($"[ID: {product.Id}] {product.Name} ${product.Price} Stock: {product.Stock}");

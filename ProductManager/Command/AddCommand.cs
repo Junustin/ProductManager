@@ -1,6 +1,6 @@
 ﻿using ProductManager.Features.ProductComponents.Data;
-using ProductManager.Features.Storage;
 using ProductManager.Interface;
+using ProductManager.Sqlite;
 
 namespace ProductManager.Command
 {
@@ -9,11 +9,11 @@ namespace ProductManager.Command
 		public string Name => "Add";
 
 		public string Description => "Add prodcut to the storage";
-		private ProductStorage _storage;
+		private readonly IProductRepository _repo;
 
-		public AddCommand(ProductStorage storage)
+		public AddCommand(IProductRepository repo)
 		{
-			_storage = storage;
+			_repo = repo;
 		}
 
 		public void Execute(string[] args)
@@ -53,9 +53,16 @@ namespace ProductManager.Command
 				return;
 			}
 
+			var productToCreate = new Product
+			{
+				Name = productName,
+				Price = price,
+				Stock = stock
+			};
+
 			// Add product to list
-			Product newProduct = _storage.AddNewProduct(new Product(productName, price, stock)); // Add new product ot list
-			Console.WriteLine($"Successfully added {productName} [ID: {newProduct.Id}]");
+			Product createdProduct = _repo.Add(productToCreate); // Add new product ot list
+			Console.WriteLine($"Successfully added {productName} [ID: {createdProduct.Id}]");
 		}
 	}
 }

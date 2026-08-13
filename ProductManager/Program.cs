@@ -1,27 +1,34 @@
 ﻿using ProductManager.Command;
 using ProductManager.Features.ProductComponents.Data;
 using ProductManager.Features.Storage;
+using ProductManager.Interface;
+using ProductManager.Sqlite;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ProductManager
 {
     internal class Program
     {
-        static void Main(string[] args)
+		static void Main(string[] args)
         {
 			Console.WriteLine("Welcome to product manager");
+			bool isRunning = true;
 
 			// Initilize all components
-			ProductStorage storage = new ProductStorage();
 			CommandDispatcher dispatcher = new CommandDispatcher();
+			IProductRepository repo = new SqliteProductRepository();
+			repo.InitilizeDatabase();
 
-			// Register all commands
-			dispatcher.RegisterCommand(new AddCommand(storage));
-			dispatcher.RegisterCommand(new ListCommand(storage));
+			// Register/Init all commands
+			dispatcher.RegisterCommand(new AddCommand(repo));
+			dispatcher.RegisterCommand(new ListCommand(repo));
+			dispatcher.RegisterCommand(new RemoveCommand(repo));
+			dispatcher.RegisterCommand(new ClearCommand(repo));
 			dispatcher.RegisterCommand(new HelpCommand());
-			dispatcher.RegisterCommand(new ExitCommand());
+			dispatcher.RegisterCommand(new ExitCommand(() => isRunning = false));
 
 			// Program loop
-            while (true)
+            while (isRunning)
             {
 				Console.WriteLine("Please enter command");
                 Console.Write("> ");

@@ -12,5 +12,7 @@ namespace ProductManager.Interface
 		void InitilizeDatabase();
 		Product Add(Product product);
 		IEnumerable<Product> GetAll();
+		bool Remove(int idToRemove);
+		void ClearAll();
 	}
 }
