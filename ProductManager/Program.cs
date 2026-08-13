@@ -42,7 +42,7 @@ namespace ProductManager
                 }
 
 				// Split raw input
-				string[] tokens = rawInput.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+				string[] tokens = rawInput.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 				// Extract command
 				string command = tokens[0];
 				// Extract arguments
