@@ -1,7 +1,7 @@
 ﻿using ProductManager.Command;
 using ProductManager.Interface;
 using ProductManager.Services;
-using ProductManager.Sqlite;
+using ProductManager.Repository;
 
 namespace ProductManager
 {
@@ -9,20 +9,24 @@ namespace ProductManager
     {
 		static void Main(string[] args)
         {
+			// Start
 			ConsoleLogger.LogInfo("Welcome to product manager!");
 			bool isRunning = true;
 
+			// Bootstraps initialize database
+			DatabaseInitializer.Initialize();
+
 			// Initilize all components
 			CommandDispatcher dispatcher = new CommandDispatcher();
-			IProductRepository repo = new SqliteProductRepository();
-			repo.InitilizeDatabase();
+			IProductRepository productRepo = new SqliteProductRepository();
+			IOrderRepository orderRepo = new SqliteOrderRepository();
 
 			// Register/Init all commands
-			dispatcher.RegisterCommand(new AddCommand(repo));
-			dispatcher.RegisterCommand(new ListCommand(repo));
-			dispatcher.RegisterCommand(new RemoveCommand(repo));
-			dispatcher.RegisterCommand(new UpdateCommand(repo));
-			dispatcher.RegisterCommand(new ClearCommand(repo));
+			dispatcher.RegisterCommand(new AddCommand(productRepo));
+			dispatcher.RegisterCommand(new ListCommand(productRepo));
+			dispatcher.RegisterCommand(new RemoveCommand(productRepo));
+			dispatcher.RegisterCommand(new UpdateCommand(productRepo));
+			dispatcher.RegisterCommand(new ClearCommand(productRepo));
 			dispatcher.RegisterCommand(new HelpCommand());
 			dispatcher.RegisterCommand(new ExitCommand(() => isRunning = false));
 
@@ -33,7 +37,7 @@ namespace ProductManager
                 ConsoleLogger.LogInfo("> ", false);
 				string? rawInput = Console.ReadLine();
 
-				// handole blank or empty input
+				// handle blank or empty input
                 if(string.IsNullOrWhiteSpace(rawInput))
                 {
 					ConsoleLogger.LogError("Please enter valid command\nType help for all command");

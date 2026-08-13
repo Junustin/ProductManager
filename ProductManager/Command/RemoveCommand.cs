@@ -1,6 +1,5 @@
 ﻿using ProductManager.Interface;
 using ProductManager.Services;
-using ProductManager.Sqlite;
 
 namespace ProductManager.Command
 {

@@ -1,4 +1,4 @@
-﻿using ProductManager.Features.ProductComponents.Data;
+﻿using ProductManager.Component.ProductComponents.Data;
 using ProductManager.Interface;
 using ProductManager.Services;
 

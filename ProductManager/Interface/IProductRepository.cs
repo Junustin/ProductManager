@@ -1,10 +1,9 @@
-﻿using ProductManager.Features.ProductComponents.Data;
+﻿using ProductManager.Component.ProductComponents.Data;
 
 namespace ProductManager.Interface
 {
 	public interface IProductRepository
 	{
-		void InitilizeDatabase();
 		Product Add(Product product);
 		bool Update(Product product);
 		IEnumerable<Product> GetAll();

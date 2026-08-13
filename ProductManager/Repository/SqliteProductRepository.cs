@@ -1,32 +1,14 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
-using ProductManager.Features.ProductComponents.Data;
+using ProductManager.Component.ProductComponents.Data;
 using ProductManager.Interface;
+using ProductManager.Services;
 
-namespace ProductManager.Sqlite
+namespace ProductManager.Repository
 {
 	public class SqliteProductRepository : IProductRepository
 	{
-		private readonly string _connectionString;
-
-		public SqliteProductRepository(string connectionString = "Data Source=supermarket.db")
-		{
-			_connectionString = connectionString;
-		}
-
-		public void InitilizeDatabase()
-		{
-			using var connection = new SqliteConnection(_connectionString);
-
-			string sql = @"
-				CREATE TABLE IF NOT EXISTS Products (
-				Id INTEGER PRIMARY KEY AUTOINCREMENT,
-				Name TEXT NOT NULL,
-				Price DECIMAL NOT NULL,
-				Stock INTEGER NOT NULL);";
-
-			connection.Execute(sql);
-		}
+		private readonly string _connectionString = "Data Source=supermarket.db;Foreign Keys=True;";
 
 		public Product Add(Product product)
 		{

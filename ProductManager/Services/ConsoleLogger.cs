@@ -16,12 +16,16 @@ namespace ProductManager.Services
 				AnsiConsole.MarkupLine($"[bold blue] Info: [/] {message}");
 			}
 			else
-				AnsiConsole.Markup($"[bold blue] Info: [/]{message}");
+				AnsiConsole.Markup($"[bold blue] Info: [/] {message}");
 		}
 
 		public static void LogSuccess(string message) 
 		{
 			AnsiConsole.MarkupLine($"[bold green] Success: [/]{message}");
+		}
+		public static void LogSuccess(String message, bool newLine)
+		{
+			AnsiConsole.Markup($"[bold green] Success: [/]{message}");
 		}
 		
 		public static void LogWarning(string message)
