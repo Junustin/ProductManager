@@ -3,15 +3,15 @@ using ProductManager.Services;
 
 namespace ProductManager.Command
 {
-	public class RemoveCommand : ICommand
+	public class DeleteCommand : ICommand
 	{
-		public string Name => "Remove";
+		public string Name => "Delete";
 
-		public string Description => "Remove product entry from database";
+		public string Description => "Delete product entry from database";
 
 		private readonly IProductRepository _repo;
 
-		public RemoveCommand(IProductRepository repo)
+		public DeleteCommand(IProductRepository repo)
 		{
 			_repo = repo;
 		}
@@ -26,7 +26,7 @@ namespace ProductManager.Command
 
 			if (int.TryParse(args[0], out int idToRemove))
 			{
-				if (_repo.Remove(idToRemove))
+				if (_repo.Delete(idToRemove))
 				{
 					ConsoleLogger.LogSuccess($"Remove product {idToRemove} successful.");
 					return;

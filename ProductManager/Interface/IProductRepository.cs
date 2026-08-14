@@ -8,7 +8,7 @@ namespace ProductManager.Interface
 		bool Update(Product product);
 		IEnumerable<Product> GetAll();
 		Product? GetById(int id);
-		bool Remove(int idToRemove);
+		bool Delete(int idToRemove);
 		void ClearAll();
 	}
 }

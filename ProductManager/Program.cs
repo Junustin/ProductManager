@@ -24,9 +24,10 @@ namespace ProductManager
 			// Register/Init all commands
 			dispatcher.RegisterCommand(new AddCommand(productRepo));
 			dispatcher.RegisterCommand(new ListCommand(productRepo));
-			dispatcher.RegisterCommand(new RemoveCommand(productRepo));
+			dispatcher.RegisterCommand(new DeleteCommand(productRepo));
 			dispatcher.RegisterCommand(new UpdateCommand(productRepo));
-			dispatcher.RegisterCommand(new ClearCommand(productRepo));
+			dispatcher.RegisterCommand(new BuyCommand(productRepo, orderRepo));
+			dispatcher.RegisterCommand(new ClearAllCommand(productRepo, orderRepo));
 			dispatcher.RegisterCommand(new HelpCommand());
 			dispatcher.RegisterCommand(new ExitCommand(() => isRunning = false));
 

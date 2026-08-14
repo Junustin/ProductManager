@@ -55,7 +55,7 @@ namespace ProductManager.Command
 						}
 						break;
 					case "stock":
-						if (int.TryParse(args[3], out int stock) || stock < 0)
+						if (int.TryParse(args[2], out int stock) || stock < 0)
 						{
 							product.Stock = stock;
 						}

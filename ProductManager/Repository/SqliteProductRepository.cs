@@ -2,7 +2,6 @@
 using Microsoft.Data.Sqlite;
 using ProductManager.Component.ProductComponents.Data;
 using ProductManager.Interface;
-using ProductManager.Services;
 
 namespace ProductManager.Repository
 {
@@ -55,7 +54,7 @@ namespace ProductManager.Repository
 			return connection.QuerySingleOrDefault<Product>(sql, new {Id = id});
 		}
 
-		public bool Remove(int id)
+		public bool Delete(int id)
 		{
 			using var connection = new SqliteConnection(_connectionString);
 
@@ -71,8 +70,10 @@ namespace ProductManager.Repository
 			using var connection = new SqliteConnection(_connectionString);
 
 			string sql = @"
+				PRAGMA foreign_keys = OFF;
 				DELETE FROM Products;
-				DELETE FROM sqlite_sequence WHERE name='Products';";
+				DELETE FROM sqlite_sequence WHERE name='Products';
+				PRAGMA foreign_keys = ON;";
 
 			connection.Execute(sql);
 		}

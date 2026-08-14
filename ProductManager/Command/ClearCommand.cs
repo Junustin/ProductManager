@@ -26,11 +26,6 @@ namespace ProductManager.Command
 			if (confirmation?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true)
 			{
 				_repo.ClearAll();
-				ConsoleLogger.LogSuccess("Database cleared successfully. Next added product will start at ID 1.");
-			}
-			else
-			{
-				ConsoleLogger.LogError("Clear operation cancelled.");
 			}
 		}
 	}
