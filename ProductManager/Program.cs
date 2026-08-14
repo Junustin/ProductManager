@@ -2,6 +2,7 @@
 using ProductManager.Interface;
 using ProductManager.Services;
 using ProductManager.Repository;
+using ProductManager.Component.CartComponents;
 
 namespace ProductManager
 {
@@ -17,6 +18,7 @@ namespace ProductManager
 			DatabaseInitializer.Initialize();
 
 			// Initilize all components
+			ShoppingCart cart = new ShoppingCart();	
 			CommandDispatcher dispatcher = new CommandDispatcher();
 			IProductRepository productRepo = new SqliteProductRepository();
 			IOrderRepository orderRepo = new SqliteOrderRepository();
@@ -27,6 +29,9 @@ namespace ProductManager
 			dispatcher.RegisterCommand(new DeleteCommand(productRepo));
 			dispatcher.RegisterCommand(new UpdateCommand(productRepo));
 			dispatcher.RegisterCommand(new BuyCommand(productRepo, orderRepo));
+			dispatcher.RegisterCommand(new AddToCartCommand(productRepo, cart));
+			dispatcher.RegisterCommand(new CheckCartCommand(productRepo, cart));
+			dispatcher.RegisterCommand(new CheckOutCommand( productRepo, orderRepo, cart));
 			dispatcher.RegisterCommand(new ClearAllCommand(productRepo, orderRepo));
 			dispatcher.RegisterCommand(new HelpCommand());
 			dispatcher.RegisterCommand(new ExitCommand(() => isRunning = false));
